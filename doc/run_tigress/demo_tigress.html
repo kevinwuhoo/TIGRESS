@@ -6,16 +6,17 @@
   <meta name="keywords" content="demo_tigress">
   <meta name="description" content="Demo for TIGRESS">
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
   <meta name="robots" content="index, follow">
   <link type="text/css" rel="stylesheet" href="../m2html.css">
-  <script type="text/javascript">
-    if (top.frames.length == 0) { top.location = "../index.html"; };
-  </script>
 </head>
 <body>
 <a name="_top"></a>
-<!-- menu.html run_tigress -->
+<div><a href="../index.html">Home</a> &gt;  <a href="#">run_tigress</a> &gt; demo_tigress.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for ./run_tigress&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
 <h1>demo_tigress
 </h1>
 
@@ -26,24 +27,22 @@
 <div class="box"><strong>This is a script file. </strong></div>
 
 <h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
-<div class="fragment" style="background-image:url(../brain.png)"><pre class="comment"> Demo for TIGRESS</pre></div>
+<div class="fragment"><pre class="comment"> Demo for TIGRESS</pre></div>
 
 <!-- crossreference -->
 <h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
-<div class="fragment" style="background-image:url(../brain.png)">
 This function calls:
 <ul style="list-style-image:url(../matlabicon.gif)">
 <li><a href="predict_network.html" class="code" title="function edges=predict_network(scores,tf_index,varargin)">predict_network</a>	Create list of predicted edges and optionally print them in a text file</li><li><a href="score_edges.html" class="code" title="function scores = score_edges(freq,varargin)">score_edges</a>	Transforms frequencies into scores</li><li><a href="tigress.html" class="code" title="function freq=tigress(data,varargin)">tigress</a>	Runs tigress and returns the frequency matrix</li></ul>
 This function is called by:
 <ul style="list-style-image:url(../matlabicon.gif)">
 </ul>
-</div>
 <!-- crossreference -->
 
 
 
 <h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
-<div class="fragment" style="background-image:url(../brain.png)"><pre>0001 <span class="comment">% Demo for TIGRESS</span>
+<div class="fragment"><pre>0001 <span class="comment">% Demo for TIGRESS</span>
 0002 
 0003 <span class="comment">%% Please make sure to be located in TIGRESS/.</span>
 0004 
@@ -106,11 +105,19 @@ This function is called by:
 0061 display(edges)
 0062 pause 
 0063 
-0064 fprintf(<span class="string">'.................................................\n'</span>)
-0065 fprintf(<span class="string">'That''s it! Now you can try it on real data (e.g. load data1 or load ecoli) \n'</span>)
-0066 fprintf(<span class="string">'It will be less fast...\n'</span>)
-0067 
-0068</pre></div>
-<hr><address>Generated on Thu 09-Feb-2012 19:48:51 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+0064 <span class="comment">%% Evaluate predictions</span>
+0065 fprintf(<span class="string">'********************************************* \n'</span>)
+0066 fprintf(<span class="string">'6. We may now evaluate the predictions \n'</span>)
+0067 fprintf(<span class="string">'********************************************* \n \n'</span>)
+0068 [TPR FPR PREC REC L AUROC AUPR] = GRNInferenceEvaluation(dataTest.gold_edges_num,edges);
+0069 display(AUPR)
+0070 display(AUROC)
+0071 pause
+0072 fprintf(<span class="string">'.................................................\n'</span>)
+0073 fprintf(<span class="string">'That''s it! Now you can try it on real data (e.g. load data1 or load ecoli) \n'</span>)
+0074 fprintf(<span class="string">'It will be less fast...\n'</span>)
+0075 
+0076</pre></div>
+<hr><address>Generated on Tue 24-Jul-2012 18:29:20 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
 </body>
 </html>

@@ -6,16 +6,17 @@
   <meta name="keywords" content="tigress_full">
   <meta name="description" content="Complete TIGRESS GRN inference method.">
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
   <meta name="robots" content="index, follow">
   <link type="text/css" rel="stylesheet" href="../m2html.css">
-  <script type="text/javascript">
-    if (top.frames.length == 0) { top.location = "../index.html"; };
-  </script>
 </head>
 <body>
 <a name="_top"></a>
-<!-- menu.html run_tigress -->
+<div><a href="../index.html">Home</a> &gt;  <a href="#">run_tigress</a> &gt; tigress_full.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for ./run_tigress&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
 <h1>tigress_full
 </h1>
 
@@ -23,10 +24,10 @@
 <div class="box"><strong>Complete TIGRESS GRN inference method.</strong></div>
 
 <h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
-<div class="box"><strong>function tigress_full(expression_file,tflist_file,varargin) </strong></div>
+<div class="box"><strong>function success=tigress_full(data,reg,varargin) </strong></div>
 
 <h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
-<div class="fragment" style="background-image:url(../brain.png)"><pre class="comment"> Complete TIGRESS GRN inference method.
+<div class="fragment"><pre class="comment"> Complete TIGRESS GRN inference method.
  Runs the TIGRESS gene regulatory network inference method given 
  expression data and a list of transcription factors. Options can be 
  included (see details below). It outputs a text file containing a 
@@ -73,20 +74,18 @@
 
 <!-- crossreference -->
 <h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
-<div class="fragment" style="background-image:url(../brain.png)">
 This function calls:
 <ul style="list-style-image:url(../matlabicon.gif)">
-<li><a href="predict_network.html" class="code" title="function edges=predict_network(scores,tf_index,varargin)">predict_network</a>	Create list of predicted edges and optionally print them in a text file</li><li><a href="read_data.html" class="code" title="function data=read_data(expression_file,tflist_file)">read_data</a>	Transforms data from files into a structure</li><li><a href="score_edges.html" class="code" title="function scores = score_edges(freq,varargin)">score_edges</a>	Transforms frequencies into scores</li><li><a href="tigress.html" class="code" title="function freq=tigress(data,varargin)">tigress</a>	Runs tigress and returns the frequency matrix</li></ul>
+<li><a href="predict_network.html" class="code" title="function edges=predict_network(scores,tf_index,varargin)">predict_network</a>	Create list of predicted edges and optionally print them in a text file</li><li><a href="read_data.html" class="code" title="function data=read_data(networkname)">read_data</a>	Transforms data from files into a structure</li><li><a href="score_edges.html" class="code" title="function scores = score_edges(freq,varargin)">score_edges</a>	Transforms frequencies into scores</li><li><a href="tigress.html" class="code" title="function freq=tigress(data,varargin)">tigress</a>	Runs tigress and returns the frequency matrix</li></ul>
 This function is called by:
 <ul style="list-style-image:url(../matlabicon.gif)">
 </ul>
-</div>
 <!-- crossreference -->
 
 
 
 <h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
-<div class="fragment" style="background-image:url(../brain.png)"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function tigress_full(expression_file,tflist_file,varargin)</a>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function success=tigress_full(data,reg,varargin)</a>
 0002 
 0003 <span class="comment">% Complete TIGRESS GRN inference method.</span>
 0004 <span class="comment">% Runs the TIGRESS gene regulatory network inference method given</span>
@@ -133,44 +132,61 @@ This function is called by:
 0045 <span class="comment">%</span>
 0046 <span class="comment">% Anne-Claire Haury, 2012</span>
 0047 
-0048 <span class="comment">%% Parse arguments</span>
-0049 p = inputParser;   <span class="comment">% Create an instance of the class.</span>
-0050 p.addRequired(<span class="string">'expression_file'</span>, @ischar);
-0051 p.addRequired(<span class="string">'tflist_file'</span>, @ischar);
-0052 p.addParamValue(<span class="string">'L'</span>, 5, @isfloat);
-0053 p.addParamValue(<span class="string">'R'</span>, 1000, @isfloat);
-0054 p.addParamValue(<span class="string">'alpha'</span>, .2, @(x)x&gt;0 &amp;&amp; x&lt;=1);
-0055 p.addParamValue(<span class="string">'method'</span>,<span class="string">'area'</span>,@(x)any(strcmpi(x,{<span class="string">'area'</span>,<span class="string">'original'</span>})));
-0056 p.addParamValue(<span class="string">'cutoff'</span>, Inf, @isfloat);
-0057 p.addParamValue(<span class="string">'verbose'</span>,true,@islogical);
-0058 p.addParamValue(<span class="string">'name_net'</span>,<span class="string">'./edges.txt'</span>,@isstr);
-0059 p.parse(<span class="string">'expression_file'</span>,<span class="string">'tflist_file'</span>,varargin{:})
-0060 
-0061 <span class="comment">%% Show which arguments were not specified in the call.</span>
-0062 disp(<span class="string">' '</span>) 
-0063 disp <span class="string">'List of arguments given default values:'</span> 
-0064 <span class="keyword">for</span> k=1:numel(p.UsingDefaults)
-0065    field = char(p.UsingDefaults(k));
-0066    value = num2str(p.Results.(field));
-0067    <span class="keyword">if</span> isempty(value)   
-0068        value = <span class="string">'[]'</span>;   
-0069    <span class="keyword">end</span>
-0070    fprintf(<span class="string">'   ''%s''    defaults to %s \n'</span>, field, value)
-0071 <span class="keyword">end</span>
-0072  
-0073 <span class="comment">%% Read inputs</span>
-0074 data=<a href="read_data.html" class="code" title="function data=read_data(expression_file,tflist_file)">read_data</a>(expression_file,tflist_file);
-0075 
-0076 <span class="comment">%% Get frequency matrix F</span>
-0077 freq=<a href="tigress.html" class="code" title="function freq=tigress(data,varargin)">tigress</a>(data,<span class="string">'L'</span>,p.Results.L,<span class="string">'R'</span>,p.Results.R,<span class="string">'alpha'</span>,<span class="keyword">...</span>
-0078     p.Results.alpha,<span class="string">'verbose'</span>,p.Results.verbose);
-0079 
-0080 <span class="comment">%% Get scores</span>
-0081 scores=<a href="score_edges.html" class="code" title="function scores = score_edges(freq,varargin)">score_edges</a>(freq,<span class="string">'method'</span>,p.Results.method,<span class="string">'L'</span>,p.Results.L);
-0082 
-0083 <span class="comment">%% Write edges</span>
-0084 <a href="predict_network.html" class="code" title="function edges=predict_network(scores,tf_index,varargin)">predict_network</a>(scores,data.tf_index,<span class="string">'genenames'</span>,data.genenames,<span class="keyword">...</span>
-0085     <span class="string">'cutoff'</span>,p.Results.cutoff,<span class="string">'name_net'</span>,p.Results.name_net);</pre></div>
-<hr><address>Generated on Thu 09-Feb-2012 19:48:51 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+0048 success=-1;
+0049 <span class="comment">%% Parse arguments</span>
+0050 p = inputParser;   <span class="comment">% Create an instance of the class.</span>
+0051 p.addRequired(<span class="string">'--data'</span>, @ischar);
+0052 p.addRequired(<span class="string">'--reg'</span>, @ischar);
+0053 p.addParamValue(<span class="string">'--L'</span>, <span class="string">'5'</span>, @ischar);
+0054 p.addParamValue(<span class="string">'--R'</span>, <span class="string">'1000'</span>, @ischar);
+0055 p.addParamValue(<span class="string">'--alpha'</span>, <span class="string">'.2'</span>, @ischar);
+0056 p.addParamValue(<span class="string">'--method'</span>,<span class="string">'area'</span>,@(x)any(strcmpi(x,{<span class="string">'area'</span>,<span class="string">'original'</span>})));
+0057 p.addParamValue(<span class="string">'--cut'</span>, <span class="string">'Inf'</span>, @ischar);
+0058 p.addParamValue(<span class="string">'--verbose'</span>,<span class="string">'1'</span>,@ischar);
+0059 p.addParamValue(<span class="string">'--name_net'</span>,[data,<span class="string">'_TIGRESS_predictions.txt'</span>],@isstr);
+0060 p.addParamValue(<span class="string">'--LarsAlgo'</span>,<span class="string">'lars'</span>,@(x)any(strcmpi(x,{<span class="string">'spams'</span>,<span class="string">'glmnet'</span>,<span class="string">'lars'</span>})));
+0061 p.addParamValue(<span class="string">'--parallel'</span>,<span class="string">'0'</span>,@ischar);
+0062 p.parse(<span class="string">'data'</span>,<span class="string">'reg'</span>,varargin{:})
+0063 
+0064 
+0065 
+0066 <span class="comment">%% Show which arguments were not specified in the call.</span>
+0067 disp(<span class="string">' '</span>) 
+0068 disp <span class="string">'List of arguments given default values:'</span> 
+0069 <span class="keyword">for</span> k=1:numel(p.UsingDefaults)
+0070    field = char(p.UsingDefaults(k));
+0071    value = num2str(p.Results.(field));
+0072    <span class="keyword">if</span> isempty(value)   
+0073        value = <span class="string">'[]'</span>;   
+0074    <span class="keyword">end</span>
+0075    fprintf(<span class="string">'   ''%s''    defaults to %s \n'</span>, field, value)
+0076 <span class="keyword">end</span>
+0077 
+0078 <span class="comment">%% Set variables</span>
+0079 L=str2double(p.Results.L);
+0080 R=str2double(p.Results.R);
+0081 alpha=str2double(p.Results.alpha);
+0082 cut=str2double(p.Results.cut);
+0083 verbose=logical(str2double(p.Results.verbose));
+0084 parallel=logical(str2double(p.Results.parallel));
+0085 method=p.Results.method; 
+0086 LarsAlgo=p.Results.LarsAlgo;
+0087 name_net=p.Results.name_net;
+0088 
+0089 <span class="comment">%% Read inputs</span>
+0090 data2=<a href="read_data.html" class="code" title="function data=read_data(networkname)">read_data</a>(data,reg);
+0091 
+0092 <span class="comment">%% Get frequency matrix F</span>
+0093 freq=<a href="tigress.html" class="code" title="function freq=tigress(data,varargin)">tigress</a>(data2,<span class="string">'L'</span>,L,<span class="string">'R'</span>,R,<span class="string">'alpha'</span>,alpha,<span class="string">'verbose'</span>,verbose,<span class="keyword">...</span>
+0094     <span class="string">'LarsAlgo'</span>,LarsAlgo,<span class="string">'parallel'</span>,parallel);
+0095 
+0096 <span class="comment">%% Get scores</span>
+0097 scores=<a href="score_edges.html" class="code" title="function scores = score_edges(freq,varargin)">score_edges</a>(freq,<span class="string">'method'</span>,method,<span class="string">'L'</span>,L);
+0098 
+0099 <span class="comment">%% Write edges</span>
+0100 <a href="predict_network.html" class="code" title="function edges=predict_network(scores,tf_index,varargin)">predict_network</a>(scores,data2.tf_index,<span class="string">'genenames'</span>,data2.genenames,<span class="keyword">...</span>
+0101     <span class="string">'cut'</span>,cut,<span class="string">'name_net'</span>,name_net);
+0102 success=0;</pre></div>
+<hr><address>Generated on Tue 24-Jul-2012 18:29:20 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
 </body>
 </html>

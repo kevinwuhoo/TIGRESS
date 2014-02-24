@@ -4,50 +4,58 @@
 <head>
   <title>Description of probability</title>
   <meta name="keywords" content="probability">
-  <meta name="description" content="P(X&gt;=x)">
+  <meta name="description" content="Computes p-value of x under distribution of X : P(X&gt;=x).">
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
   <meta name="robots" content="index, follow">
   <link type="text/css" rel="stylesheet" href="../m2html.css">
-  <script type="text/javascript">
-    if (top.frames.length == 0) { top.location = "../index.html"; };
-  </script>
 </head>
 <body>
 <a name="_top"></a>
-<!-- menu.html eval_tigress -->
+<div><a href="../index.html">Home</a> &gt;  <a href="#">eval_tigress</a> &gt; probability.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for ./eval_tigress&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
 <h1>probability
 </h1>
 
 <h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
-<div class="box"><strong>P(X&gt;=x)</strong></div>
+<div class="box"><strong>Computes p-value of x under distribution of X : P(X&gt;=x).</strong></div>
 
 <h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
 <div class="box"><strong>function P = probability(X,Y,x) </strong></div>
 
 <h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
-<div class="fragment" style="background-image:url(../brain.png)"><pre class="comment"> P(X&gt;=x)</pre></div>
+<div class="fragment"><pre class="comment"> Computes p-value of x under distribution of X : P(X&gt;=x). 
+ (X,Y) defines the probability distribution function.
+ Initial code by Stolovitsky et al. Optimized by Anne-Claire Haury, 2012.
+
+ See also <a href="GRNInferenceEvaluation.html" class="code" title="function [TPR FPR PREC REC L AUROC AUPR P_AUROC P_AUPR] = GRNInferenceEvaluation(gold_positives, prediction_raw, pdf_aupr, pdf_auroc)">GRNInferenceEvaluation</a></pre></div>
 
 <!-- crossreference -->
 <h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
-<div class="fragment" style="background-image:url(../brain.png)">
 This function calls:
 <ul style="list-style-image:url(../matlabicon.gif)">
 </ul>
 This function is called by:
 <ul style="list-style-image:url(../matlabicon.gif)">
-<li><a href="DREAM5_Challenge4_Evaluation.html" class="code" title="function [TPR FPR PREC REC L AUROC AUPR P_AUROC P_AUPR] = DREAM5_Challenge4_Evaluation(gold_positives, prediction_raw, pdf_aupr, pdf_auroc)">DREAM5_Challenge4_Evaluation</a>	DREAM5 accuracy evaluation. Returns accuracy statistics given a</li></ul>
-</div>
+<li><a href="GRNInferenceEvaluation.html" class="code" title="function [TPR FPR PREC REC L AUROC AUPR P_AUROC P_AUPR] = GRNInferenceEvaluation(gold_positives, prediction_raw, pdf_aupr, pdf_auroc)">GRNInferenceEvaluation</a>	DREAM5-like accuracy evaluation. Returns accuracy statistics given a</li></ul>
 <!-- crossreference -->
 
 
 
 <h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
-<div class="fragment" style="background-image:url(../brain.png)"><pre>0001 <span class="comment">% P(X&gt;=x)</span>
-0002 <a name="_sub0" href="#_subfunctions" class="code">function P = probability(X,Y,x)</a>
-0003 
-0004 dx = X(2)-X(1);
-0005 P = sum( double(X&gt;=x) .* Y * dx );</pre></div>
-<hr><address>Generated on Thu 09-Feb-2012 19:48:51 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function P = probability(X,Y,x)</a>
+0002 
+0003 <span class="comment">% Computes p-value of x under distribution of X : P(X&gt;=x).</span>
+0004 <span class="comment">% (X,Y) defines the probability distribution function.</span>
+0005 <span class="comment">% Initial code by Stolovitsky et al. Optimized by Anne-Claire Haury, 2012.</span>
+0006 <span class="comment">%</span>
+0007 <span class="comment">% See also GRNInferenceEvaluation</span>
+0008 
+0009 dx = X(2)-X(1);
+0010 P = sum(Y(X&gt;=x)*dx);</pre></div>
+<hr><address>Generated on Tue 24-Jul-2012 18:29:20 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
 </body>
 </html>

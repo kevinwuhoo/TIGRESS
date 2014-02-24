@@ -61,6 +61,14 @@ edges=predict_network(scores,dataTest.tf_index,'cutoff',15);
 display(edges)
 pause 
 
+%% Evaluate predictions
+fprintf('********************************************* \n')
+fprintf('6. We may now evaluate the predictions \n')
+fprintf('********************************************* \n \n')
+[TPR FPR PREC REC L AUROC AUPR] = GRNInferenceEvaluation(dataTest.gold_edges_num,edges);
+display(AUPR)
+display(AUROC)
+pause
 fprintf('.................................................\n')
 fprintf('That''s it! Now you can try it on real data (e.g. load data1 or load ecoli) \n')
 fprintf('It will be less fast...\n')

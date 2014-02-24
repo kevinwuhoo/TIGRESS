@@ -6,16 +6,17 @@
   <meta name="keywords" content="tigress">
   <meta name="description" content="Runs tigress and returns the frequency matrix">
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
   <meta name="robots" content="index, follow">
   <link type="text/css" rel="stylesheet" href="../m2html.css">
-  <script type="text/javascript">
-    if (top.frames.length == 0) { top.location = "../index.html"; };
-  </script>
 </head>
 <body>
 <a name="_top"></a>
-<!-- menu.html run_tigress -->
+<div><a href="../index.html">Home</a> &gt;  <a href="#">run_tigress</a> &gt; tigress.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for ./run_tigress&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
 <h1>tigress
 </h1>
 
@@ -26,7 +27,7 @@
 <div class="box"><strong>function freq=tigress(data,varargin) </strong></div>
 
 <h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
-<div class="fragment" style="background-image:url(../brain.png)"><pre class="comment"> Runs tigress and returns the frequency matrix
+<div class="fragment"><pre class="comment"> Runs tigress and returns the frequency matrix
 
  Syntax 1: freq=tigress(dataset) % all option values set to default
  Syntax 2: freq=tigress(dataset,'option1',option1_value,...
@@ -38,43 +39,46 @@
  OPTIONAL INPUTS:
  
  - R: number of resamplings that should be used to run stability selection 
-   (default=1000)
+   (default=1000). Note that R can be a vector of increasing values. In
+   this case, TIGRESS will return frequencies for each of these values.
  - alpha: randomization level. alpha is a scalar st 0&lt;alpha&lt;=1. If
    alpha=1, no randomization is used (default=.2)
  - L: number of LARS steps that should be considered (default=5)
  - verbose: do you want the algorithm to show you the progress? Logical.
    (default=true)
+ - parallel: should MATLAB run in parallel? (default=false). Warning:
+ setting this option to true requires the parallel computing toolbox.
+ - LarsAlgo: which algorithm should be used for LARS? Options are: 'spams'
+ (see below), 'lars' (default) or 'glmnet'.
  
  OUTPUT: 
- - freq: a frequency matrix of size (ntf,L,ntg)
+ - freq: a frequency matrix of size (ntf,L,ntg,[length(R)])
 
  Example:
  load data1
- freq=tigress(data1,'R',200,'alpha',0.1,'L',3,'verbose',false)
+ freq=tigress(data1,'R',[200 500 1000],'alpha',0.1,'L',3,'verbose',false)
  
- Note that this code calls stability_selection.m that uses the SPAMS 
- toolbox, as implemented by Julien Mairal
+ Note that setting otpion 'LarsAlgo' to 'spams' requires the SPAMS 
+ toolbox, as implemented by Julien Mairal. 
 
- See also : <a href="tigress_full.html" class="code" title="function tigress_full(expression_file,tflist_file,varargin)">tigress_full</a>, <a href="stability_selection.html" class="code" title="function freq=stability_selection(x,y,ntf,predictorTF,R,L,alpha)">stability_selection</a>, <a href="score_edges.html" class="code" title="function scores = score_edges(freq,varargin)">score_edges</a>, <a href="predict_network.html" class="code" title="function edges=predict_network(scores,tf_index,varargin)">predict_network</a>
+ See also : <a href="tigress_full.html" class="code" title="function success=tigress_full(data,reg,varargin)">tigress_full</a>, <a href="stability_selection.html" class="code" title="function F=stability_selection(x,y,ntf,predictorTF,R,L,alpha,method)">stability_selection</a>, <a href="score_edges.html" class="code" title="function scores = score_edges(freq,varargin)">score_edges</a>, <a href="predict_network.html" class="code" title="function edges=predict_network(scores,tf_index,varargin)">predict_network</a>
 
  Anne-Claire Haury, 2011</pre></div>
 
 <!-- crossreference -->
 <h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
-<div class="fragment" style="background-image:url(../brain.png)">
 This function calls:
 <ul style="list-style-image:url(../matlabicon.gif)">
-<li><a href="scale_data.html" class="code" title="function data=scale_data(X)">scale_data</a>	Center-mean and scales to unit variance by column</li><li><a href="stability_selection.html" class="code" title="function freq=stability_selection(x,y,ntf,predictorTF,R,L,alpha)">stability_selection</a>	Stability selection inspired by Meinshausen & Buehlmann, 2009</li></ul>
+<li><a href="scale_data.html" class="code" title="function data=scale_data(X)">scale_data</a>	Center-mean and scales to unit variance by column</li><li><a href="stability_selection.html" class="code" title="function F=stability_selection(x,y,ntf,predictorTF,R,L,alpha,method)">stability_selection</a>	Stability selection inspired by Meinshausen & Buehlmann, 2009</li></ul>
 This function is called by:
 <ul style="list-style-image:url(../matlabicon.gif)">
-<li><a href="demo_tigress.html" class="code" title="">demo_tigress</a>	Demo for TIGRESS</li><li><a href="tigress_full.html" class="code" title="function tigress_full(expression_file,tflist_file,varargin)">tigress_full</a>	Complete TIGRESS GRN inference method.</li></ul>
-</div>
+<li><a href="demo_tigress.html" class="code" title="">demo_tigress</a>	Demo for TIGRESS</li><li><a href="tigress_full.html" class="code" title="function success=tigress_full(data,reg,varargin)">tigress_full</a>	Complete TIGRESS GRN inference method.</li></ul>
 <!-- crossreference -->
 
 
 
 <h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
-<div class="fragment" style="background-image:url(../brain.png)"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function freq=tigress(data,varargin)</a>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function freq=tigress(data,varargin)</a>
 0002 
 0003 <span class="comment">% Runs tigress and returns the frequency matrix</span>
 0004 <span class="comment">%</span>
@@ -88,89 +92,134 @@ This function is called by:
 0012 <span class="comment">% OPTIONAL INPUTS:</span>
 0013 <span class="comment">%</span>
 0014 <span class="comment">% - R: number of resamplings that should be used to run stability selection</span>
-0015 <span class="comment">%   (default=1000)</span>
-0016 <span class="comment">% - alpha: randomization level. alpha is a scalar st 0&lt;alpha&lt;=1. If</span>
-0017 <span class="comment">%   alpha=1, no randomization is used (default=.2)</span>
-0018 <span class="comment">% - L: number of LARS steps that should be considered (default=5)</span>
-0019 <span class="comment">% - verbose: do you want the algorithm to show you the progress? Logical.</span>
-0020 <span class="comment">%   (default=true)</span>
-0021 <span class="comment">%</span>
-0022 <span class="comment">% OUTPUT:</span>
-0023 <span class="comment">% - freq: a frequency matrix of size (ntf,L,ntg)</span>
-0024 <span class="comment">%</span>
-0025 <span class="comment">% Example:</span>
-0026 <span class="comment">% load data1</span>
-0027 <span class="comment">% freq=tigress(data1,'R',200,'alpha',0.1,'L',3,'verbose',false)</span>
-0028 <span class="comment">%</span>
-0029 <span class="comment">% Note that this code calls stability_selection.m that uses the SPAMS</span>
-0030 <span class="comment">% toolbox, as implemented by Julien Mairal</span>
-0031 <span class="comment">%</span>
-0032 <span class="comment">% See also : tigress_full, stability_selection, score_edges, predict_network</span>
+0015 <span class="comment">%   (default=1000). Note that R can be a vector of increasing values. In</span>
+0016 <span class="comment">%   this case, TIGRESS will return frequencies for each of these values.</span>
+0017 <span class="comment">% - alpha: randomization level. alpha is a scalar st 0&lt;alpha&lt;=1. If</span>
+0018 <span class="comment">%   alpha=1, no randomization is used (default=.2)</span>
+0019 <span class="comment">% - L: number of LARS steps that should be considered (default=5)</span>
+0020 <span class="comment">% - verbose: do you want the algorithm to show you the progress? Logical.</span>
+0021 <span class="comment">%   (default=true)</span>
+0022 <span class="comment">% - parallel: should MATLAB run in parallel? (default=false). Warning:</span>
+0023 <span class="comment">% setting this option to true requires the parallel computing toolbox.</span>
+0024 <span class="comment">% - LarsAlgo: which algorithm should be used for LARS? Options are: 'spams'</span>
+0025 <span class="comment">% (see below), 'lars' (default) or 'glmnet'.</span>
+0026 <span class="comment">%</span>
+0027 <span class="comment">% OUTPUT:</span>
+0028 <span class="comment">% - freq: a frequency matrix of size (ntf,L,ntg,[length(R)])</span>
+0029 <span class="comment">%</span>
+0030 <span class="comment">% Example:</span>
+0031 <span class="comment">% load data1</span>
+0032 <span class="comment">% freq=tigress(data1,'R',[200 500 1000],'alpha',0.1,'L',3,'verbose',false)</span>
 0033 <span class="comment">%</span>
-0034 <span class="comment">% Anne-Claire Haury, 2011</span>
-0035 
-0036 <span class="comment">%% Parse arguments</span>
-0037 p = inputParser;   <span class="comment">% Create an instance of the class.</span>
-0038 p.addRequired(<span class="string">'data'</span>, @isstruct);
-0039 p.addParamValue(<span class="string">'L'</span>, 5, @isfloat);
-0040 p.addParamValue(<span class="string">'R'</span>, 1000, @isfloat);
-0041 p.addParamValue(<span class="string">'alpha'</span>, .2, @(x)x&gt;0 &amp;&amp; x&lt;=1);
-0042 p.addParamValue(<span class="string">'verbose'</span>,true,@islogical);
-0043 p.parse(data,varargin{:})
-0044 
-0045 <span class="comment">%% Show which arguments were not specified in the call.</span>
-0046 disp(<span class="string">' '</span>) 
-0047 disp <span class="string">'List of arguments given default values:'</span> 
-0048 <span class="keyword">for</span> k=1:numel(p.UsingDefaults)
-0049    field = char(p.UsingDefaults(k));
-0050    value = num2str(p.Results.(field));
-0051    <span class="keyword">if</span> isempty(value)   
-0052        value = <span class="string">'[]'</span>;   
-0053    <span class="keyword">end</span>
-0054    fprintf(<span class="string">'   ''%s''    defaults to %s \n'</span>, field, value)
-0055 <span class="keyword">end</span>
-0056 
-0057 <span class="comment">%% Extract arguments</span>
-0058 
-0059 R=floor(p.Results.R/2);
-0060 L=p.Results.L;
-0061 alpha=p.Results.alpha;
-0062 verbose=p.Results.verbose;
-0063 expdata=data.expdata;
-0064 genenames=data.genenames;
-0065 tflist=data.tflist;
-0066 [nexp ngenes]=size(expdata);
-0067 ntf=length(tflist);
-0068 [bla tfindices] = ismember(tflist,genenames);
-0069 
-0070 <span class="keyword">if</span> verbose
-0071     fprintf(<span class="string">'Found %d genes, %d experiments, %d transcription factors\n\n'</span>,ngenes,nexp,ntf)
-0072 <span class="keyword">end</span>
-0073 <span class="comment">% Normalize each gene to 0 mean and unit variance</span>
-0074 expdata =<a href="scale_data.html" class="code" title="function data=scale_data(X)">scale_data</a>(expdata);
-0075 
-0076 <span class="comment">%% Prepare scoring matrix</span>
-0077 freq=zeros(ntf,L,ngenes);    
+0034 <span class="comment">% Note that setting otpion 'LarsAlgo' to 'spams' requires the SPAMS</span>
+0035 <span class="comment">% toolbox, as implemented by Julien Mairal.</span>
+0036 <span class="comment">%</span>
+0037 <span class="comment">% See also : tigress_full, stability_selection, score_edges, predict_network</span>
+0038 <span class="comment">%</span>
+0039 <span class="comment">% Anne-Claire Haury, 2011</span>
+0040 
+0041 <span class="comment">%% Parse arguments</span>
+0042 p = inputParser;   <span class="comment">% Create an instance of the class.</span>
+0043 p.addRequired(<span class="string">'data'</span>, @isstruct);
+0044 p.addParamValue(<span class="string">'L'</span>, 5, @isfloat);
+0045 p.addParamValue(<span class="string">'R'</span>, 1000, @isfloat);
+0046 p.addParamValue(<span class="string">'alpha'</span>, .2, @(x)x&gt;=0 &amp;&amp; x&lt;=1);
+0047 p.addParamValue(<span class="string">'verbose'</span>,1,@islogical);
+0048 p.addParamValue(<span class="string">'LarsAlgo'</span>,<span class="string">'lars'</span>,@(x)any(strcmpi(x,{<span class="string">'spams'</span>,<span class="string">'glmnet'</span>,<span class="string">'lars'</span>})));
+0049 p.addParamValue(<span class="string">'parallel'</span>,0,@islogical);
+0050 p.parse(data,varargin{:})
+0051 
+0052 <span class="comment">%% Show which arguments were not specified in the call.</span>
+0053 disp(<span class="string">' '</span>) 
+0054 disp <span class="string">'List of arguments given default values:'</span> 
+0055 <span class="keyword">for</span> k=1:numel(p.UsingDefaults)
+0056    field = char(p.UsingDefaults(k));
+0057    value = num2str(p.Results.(field));
+0058    <span class="keyword">if</span> isempty(value)   
+0059        value = <span class="string">'[]'</span>;   
+0060    <span class="keyword">end</span>
+0061    fprintf(<span class="string">'   ''%s''    defaults to %s \n'</span>, field, value)
+0062 <span class="keyword">end</span>
+0063 
+0064 <span class="comment">%% Extract arguments</span>
+0065 
+0066 R=floor(p.Results.R/2);
+0067 L=p.Results.L;
+0068 alpha=p.Results.alpha;
+0069 verbose=p.Results.verbose;
+0070 LarsAlgo=p.Results.LarsAlgo;
+0071 parallel=p.Results.parallel;
+0072 expdata=data.expdata;
+0073 genenames=data.genenames;
+0074 tflist=data.tflist;
+0075 [nexp ngenes]=size(expdata);
+0076 ntf=length(tflist);
+0077 [bla tfindices] = ismember(tflist,genenames);
 0078 
-0079 <span class="comment">%% Treat target genes one by one</span>
-0080 
-0081 <span class="keyword">for</span> itarget=1:ngenes
-0082     <span class="keyword">if</span> verbose
-0083         fprintf(<span class="string">'Now working on target %d out of %d \n'</span>,itarget,ngenes)
-0084     <span class="keyword">end</span>
-0085     targetname = genenames(itarget);
-0086 
-0087     <span class="comment">%Find the TF to be used for prediction (all TF except the target if the target is a TF)</span>
-0088     predTF = tfindices(~ismember(tflist,targetname));
-0089 
-0090     <span class="comment">% Extract the variables for regression</span>
-0091     x = expdata(:,predTF);
-0092     y = expdata(:,itarget);
-0093 
-0094     <span class="comment">% Run stability selection</span>
-0095     tmp=<a href="stability_selection.html" class="code" title="function freq=stability_selection(x,y,ntf,predictorTF,R,L,alpha)">stability_selection</a>(x,y,ntf,predTF,R,L,alpha);
-0096     freq(:,:,itarget) = tmp';
-0097 <span class="keyword">end</span></pre></div>
-<hr><address>Generated on Thu 09-Feb-2012 19:48:51 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+0079 <span class="keyword">if</span> verbose
+0080     fprintf(<span class="string">'Found %d genes, %d experiments, %d transcription factors\n\n'</span>,ngenes,nexp,ntf)
+0081 <span class="keyword">end</span>
+0082 <span class="comment">% Normalize each gene to 0 mean and unit variance</span>
+0083 expdata =<a href="scale_data.html" class="code" title="function data=scale_data(X)">scale_data</a>(expdata);
+0084 
+0085 <span class="comment">%% Prepare frequency matrix</span>
+0086 freq=zeros(ntf,L,ngenes,length(R));
+0087 <span class="comment">%% Treat target genes one by one</span>
+0088 <span class="keyword">if</span> parallel
+0089     F=cell(ngenes,1);
+0090     <span class="keyword">for</span> itarget=1:ngenes
+0091         F{itarget}=zeros(ntf,L,length(R));    
+0092     <span class="keyword">end</span>
+0093     matlabpool open;
+0094     parfor itarget=1:ngenes
+0095         <span class="keyword">if</span> verbose
+0096             fprintf(<span class="string">'Now working on target %d out of %d \n'</span>,itarget,ngenes)
+0097         <span class="keyword">end</span>
+0098         targetname = genenames(itarget);
+0099 
+0100         <span class="comment">%Find the TF to be used for prediction (all TF except the target if the target is a TF)</span>
+0101         predTF = tfindices(~ismember(tflist,targetname));
+0102 
+0103         <span class="comment">% Extract the variables for regression</span>
+0104         x = expdata(:,predTF);
+0105         y = expdata(:,itarget);
+0106 
+0107         <span class="comment">% Run stability selection</span>
+0108         tmp=<a href="stability_selection.html" class="code" title="function F=stability_selection(x,y,ntf,predictorTF,R,L,alpha,method)">stability_selection</a>(x,y,ntf,predTF,R,L,alpha,LarsAlgo);
+0109         <span class="keyword">for</span> r=1:length(R)
+0110             F{itarget}(:,:,r) = tmp{r}';
+0111         <span class="keyword">end</span>
+0112     <span class="keyword">end</span>
+0113     matlabpool close
+0114     <span class="keyword">for</span> itarget=1:ngenes
+0115         <span class="keyword">for</span> r=1:length(R)
+0116             freq(:,:,itarget,r)=F{itarget}(:,:,r);
+0117         <span class="keyword">end</span>
+0118     <span class="keyword">end</span>
+0119     
+0120 <span class="keyword">else</span> 
+0121     <span class="keyword">for</span> itarget=1:ngenes
+0122         <span class="keyword">if</span> verbose
+0123             fprintf(<span class="string">'Now working on target %d out of %d \n'</span>,itarget,ngenes)
+0124         <span class="keyword">end</span>
+0125         tic
+0126         targetname = genenames(itarget);
+0127 
+0128         <span class="comment">%Find the TF to be used for prediction (all TF except the target if the target is a TF)</span>
+0129         predTF = tfindices(~ismember(tflist,targetname));
+0130 
+0131         <span class="comment">% Extract the variables for regression</span>
+0132         x = expdata(:,predTF);
+0133         y = expdata(:,itarget);
+0134 
+0135         <span class="comment">% Run stability selection</span>
+0136         tmp=<a href="stability_selection.html" class="code" title="function F=stability_selection(x,y,ntf,predictorTF,R,L,alpha,method)">stability_selection</a>(x,y,ntf,predTF,R,L,alpha,LarsAlgo);
+0137         <span class="keyword">for</span> r=1:length(R)
+0138             freq(:,:,itarget,r) = tmp{r}';
+0139         <span class="keyword">end</span>
+0140         toc
+0141     <span class="keyword">end</span>
+0142 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Tue 24-Jul-2012 18:29:20 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
 </body>
 </html>

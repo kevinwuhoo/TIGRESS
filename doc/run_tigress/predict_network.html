@@ -6,16 +6,17 @@
   <meta name="keywords" content="predict_network">
   <meta name="description" content="Create list of predicted edges and optionally print them in a text file">
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
   <meta name="robots" content="index, follow">
   <link type="text/css" rel="stylesheet" href="../m2html.css">
-  <script type="text/javascript">
-    if (top.frames.length == 0) { top.location = "../index.html"; };
-  </script>
 </head>
 <body>
 <a name="_top"></a>
-<!-- menu.html run_tigress -->
+<div><a href="../index.html">Home</a> &gt;  <a href="#">run_tigress</a> &gt; predict_network.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for ./run_tigress&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
 <h1>predict_network
 </h1>
 
@@ -26,7 +27,7 @@
 <div class="box"><strong>function edges=predict_network(scores,tf_index,varargin) </strong></div>
 
 <h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
-<div class="fragment" style="background-image:url(../brain.png)"><pre class="comment"> Create list of predicted edges and optionally print them in a text file
+<div class="fragment"><pre class="comment"> Create list of predicted edges and optionally print them in a text file
  given a matrix of scores
 
  Syntax 1: edges=predict_network(scores,tf_index) will return the entire 
@@ -62,20 +63,18 @@
 
 <!-- crossreference -->
 <h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
-<div class="fragment" style="background-image:url(../brain.png)">
 This function calls:
 <ul style="list-style-image:url(../matlabicon.gif)">
 </ul>
 This function is called by:
 <ul style="list-style-image:url(../matlabicon.gif)">
-<li><a href="demo_tigress.html" class="code" title="">demo_tigress</a>	Demo for TIGRESS</li><li><a href="tigress_full.html" class="code" title="function tigress_full(expression_file,tflist_file,varargin)">tigress_full</a>	Complete TIGRESS GRN inference method.</li></ul>
-</div>
+<li><a href="demo_tigress.html" class="code" title="">demo_tigress</a>	Demo for TIGRESS</li><li><a href="tigress_full.html" class="code" title="function success=tigress_full(data,reg,varargin)">tigress_full</a>	Complete TIGRESS GRN inference method.</li></ul>
 <!-- crossreference -->
 
 
 
 <h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
-<div class="fragment" style="background-image:url(../brain.png)"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function edges=predict_network(scores,tf_index,varargin)</a>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function edges=predict_network(scores,tf_index,varargin)</a>
 0002 
 0003 <span class="comment">% Create list of predicted edges and optionally print them in a text file</span>
 0004 <span class="comment">% given a matrix of scores</span>
@@ -123,61 +122,58 @@ This function is called by:
 0046 
 0047 <span class="comment">%% Show which arguments were not specified in the call.</span>
 0048 disp(<span class="string">' '</span>) 
-0049 disp <span class="string">'List of arguments given default values:'</span> 
-0050 <span class="keyword">for</span> k=1:numel(p.UsingDefaults)
-0051    field = char(p.UsingDefaults(k));
-0052    value = p.Results.(field);
-0053    <span class="keyword">if</span> isempty(value)   
-0054        value = <span class="string">'[]'</span>;   
-0055    <span class="keyword">end</span>
-0056    fprintf(<span class="string">'   ''%s''    defaults to %s \n'</span>, field, value)
-0057 <span class="keyword">end</span>
+0049 <span class="keyword">for</span> k=1:numel(p.UsingDefaults)
+0050    field = char(p.UsingDefaults(k));
+0051    value = p.Results.(field);
+0052    <span class="keyword">if</span> isempty(value)   
+0053        value = <span class="string">'[]'</span>;   
+0054    <span class="keyword">end</span>
+0055    fprintf(<span class="string">'   ''%s''    defaults to %s \n'</span>, field, value)
+0056 <span class="keyword">end</span>
+0057 
 0058 
-0059 
-0060 <span class="comment">%% Initialization</span>
-0061 ngenes=size(scores,2);
-0062 ntf=length(tf_index);
-0063 edges = zeros(ngenes*ntf-ntf,3);
-0064 
-0065 <span class="comment">%% Create list of edges</span>
-0066 k=0;
-0067 <span class="keyword">for</span> i=1:ntf
-0068     <span class="keyword">for</span> j=1:ngenes
-0069         <span class="keyword">if</span> tf_index(i)~=j
-0070             k=k+1;
-0071             edges(k,:) =[tf_index(i) j scores(tf_index(i),j)];
-0072         <span class="keyword">end</span>
-0073     <span class="keyword">end</span>
-0074 <span class="keyword">end</span>
-0075 
-0076 <span class="comment">%% Sort the edges</span>
-0077 [a idx] = sort(edges(:,3),<span class="string">'descend'</span>);
-0078 edges = edges(idx,:);
-0079 
-0080 <span class="comment">%% Remove zero scores</span>
-0081 idx=edges(:,3)&gt;0;
-0082 edges=edges(idx,:);
-0083 nedges=size(edges,1);
-0084 
-0085 <span class="comment">%% Threshold (nothing changes if cutoff=Inf)</span>
-0086 <span class="keyword">if</span> nargin &gt; 3
-0087     nedges = min(p.Results.cutoff,nedges);
-0088     edges=edges(1:nedges,:);
-0089 <span class="keyword">end</span>
-0090 
-0091 <span class="comment">%% Write the network in a text file (optional)</span>
-0092 
-0093 <span class="keyword">if</span> ~isempty(p.Results.genenames) &amp;&amp; ~isempty(p.Results.name_net)
-0094     genenames=p.Results.genenames;
-0095     name_net=p.Results.name_net;
-0096     fid = fopen(name_net,<span class="string">'w'</span>);
-0097     <span class="keyword">for</span> i=1:nedges
-0098          fprintf(fid,<span class="string">'%s\t%s\t%f\r\n'</span>,genenames{edges(i,1)},genenames{edges(i,2)},edges(i,3));
-0099     <span class="keyword">end</span>
-0100     fclose(fid);
-0101 <span class="keyword">else</span>
-0102     warning(<span class="string">'Input missing to write network in a file. \n'</span>)
-0103 <span class="keyword">end</span></pre></div>
-<hr><address>Generated on Thu 09-Feb-2012 19:48:51 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+0059 <span class="comment">%% Initialization</span>
+0060 ngenes=size(scores,2);
+0061 ntf=length(tf_index);
+0062 edges = zeros(ngenes*ntf-ntf,3);
+0063 
+0064 <span class="comment">%% Create list of edges</span>
+0065 k=0;
+0066 <span class="keyword">for</span> i=1:ntf
+0067     <span class="keyword">for</span> j=1:ngenes
+0068         <span class="keyword">if</span> tf_index(i)~=j
+0069             k=k+1;
+0070             edges(k,:) =[tf_index(i) j scores(tf_index(i),j)];
+0071         <span class="keyword">end</span>
+0072     <span class="keyword">end</span>
+0073 <span class="keyword">end</span>
+0074 
+0075 <span class="comment">%% Sort the edges</span>
+0076 [a idx] = sort(edges(:,3),<span class="string">'descend'</span>);
+0077 edges = edges(idx,:);
+0078 
+0079 <span class="comment">%% Remove zero scores</span>
+0080 idx=edges(:,3)&gt;0;
+0081 edges=edges(idx,:);
+0082 nedges=size(edges,1);
+0083 
+0084 <span class="comment">%% Threshold (nothing changes if cutoff=Inf)</span>
+0085 <span class="keyword">if</span> nargin &gt; 3
+0086     nedges = min(p.Results.cutoff,nedges);
+0087     edges=edges(1:nedges,:);
+0088 <span class="keyword">end</span>
+0089 
+0090 <span class="comment">%% Write the network in a text file (optional)</span>
+0091 
+0092 <span class="keyword">if</span> ~isempty(p.Results.genenames) &amp;&amp; ~isempty(p.Results.name_net)
+0093     genenames=p.Results.genenames;
+0094     name_net=p.Results.name_net;
+0095     fid = fopen(name_net,<span class="string">'w'</span>);
+0096     <span class="keyword">for</span> i=1:nedges
+0097          fprintf(fid,<span class="string">'%s\t%s\t%f\r\n'</span>,genenames{edges(i,1)},genenames{edges(i,2)},edges(i,3));
+0098     <span class="keyword">end</span>
+0099     fclose(fid);
+0100 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Tue 24-Jul-2012 18:29:20 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
 </body>
 </html>

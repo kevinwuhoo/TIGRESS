@@ -1,5 +1,11 @@
 function A = edgelist2sparse(E)
 
+% Written by G. Stolovitsky and R. Prill for DREAM challenge evalution. 
+% A = edgelist2sparse(E) transforms two-column matrix representaing edges
+% (E) into sparse adjacency matrix A. 
+% 
+% See also : GRNInferenceEvaluation
+
 % lone nodes look like this:
 % 1  NaN
 % 2  NaN

@@ -6,16 +6,17 @@
   <meta name="keywords" content="score_edges">
   <meta name="description" content="Transforms frequencies into scores">
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="generator" content="m2html v1.5 &copy; 2003-2005 Guillaume Flandin">
   <meta name="robots" content="index, follow">
   <link type="text/css" rel="stylesheet" href="../m2html.css">
-  <script type="text/javascript">
-    if (top.frames.length == 0) { top.location = "../index.html"; };
-  </script>
 </head>
 <body>
 <a name="_top"></a>
-<!-- menu.html run_tigress -->
+<div><a href="../index.html">Home</a> &gt;  <a href="#">run_tigress</a> &gt; score_edges.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for ./run_tigress&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
 <h1>score_edges
 </h1>
 
@@ -26,7 +27,7 @@
 <div class="box"><strong>function scores = score_edges(freq,varargin) </strong></div>
 
 <h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
-<div class="fragment" style="background-image:url(../brain.png)"><pre class="comment"> Transforms frequencies into scores
+<div class="fragment"><pre class="comment"> Transforms frequencies into scores
  
  Syntax 1: scores = score_edges(freq)
  Returns a matrix of scores given a frequency matrix freq. All options are
@@ -56,20 +57,18 @@
 
 <!-- crossreference -->
 <h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
-<div class="fragment" style="background-image:url(../brain.png)">
 This function calls:
 <ul style="list-style-image:url(../matlabicon.gif)">
 </ul>
 This function is called by:
 <ul style="list-style-image:url(../matlabicon.gif)">
-<li><a href="demo_tigress.html" class="code" title="">demo_tigress</a>	Demo for TIGRESS</li><li><a href="tigress_full.html" class="code" title="function tigress_full(expression_file,tflist_file,varargin)">tigress_full</a>	Complete TIGRESS GRN inference method.</li></ul>
-</div>
+<li><a href="demo_tigress.html" class="code" title="">demo_tigress</a>	Demo for TIGRESS</li><li><a href="tigress_full.html" class="code" title="function success=tigress_full(data,reg,varargin)">tigress_full</a>	Complete TIGRESS GRN inference method.</li></ul>
 <!-- crossreference -->
 
 
 
 <h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
-<div class="fragment" style="background-image:url(../brain.png)"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function scores = score_edges(freq,varargin)</a>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function scores = score_edges(freq,varargin)</a>
 0002 
 0003 <span class="comment">% Transforms frequencies into scores</span>
 0004 <span class="comment">%</span>
@@ -109,27 +108,26 @@ This function is called by:
 0038 
 0039 <span class="comment">%% Show which arguments were not specified in the call.</span>
 0040 disp(<span class="string">' '</span>) 
-0041 disp <span class="string">'List of arguments given default values:'</span> 
-0042 <span class="keyword">for</span> k=1:numel(p.UsingDefaults)
-0043    field = char(p.UsingDefaults(k));
-0044    value = num2str(p.Results.(field));
-0045    <span class="keyword">if</span> isempty(value)   
-0046        value = <span class="string">'[]'</span>;   
-0047    <span class="keyword">end</span>
-0048    fprintf(<span class="string">'   ''%s''    defaults to %s \n'</span>, field, value)
-0049 <span class="keyword">end</span>
-0050 
-0051 <span class="comment">%% Restrain freq to the first steps we want to look at</span>
-0052 freq=freq(:,1:p.Results.L,:);
-0053 
-0054 <span class="comment">%% Now apply any of 'original','area', or 'warea' method (can add new ones!)</span>
-0055 <span class="keyword">switch</span> p.Results.method
-0056     <span class="keyword">case</span> <span class="string">'original'</span>
-0057         scores=reshape(max(freq,[],2),n,ng);
-0058     <span class="keyword">case</span> <span class="string">'area'</span> <span class="comment">% triangles approx. of the area</span>
-0059         scores=reshape(sum((freq(:,2:<span class="keyword">end</span>,:)+freq(:,1:end-1,:))/2,2),n,ng);
-0060         scores=1/(p.Results.L-1.5)*scores;
-0061 <span class="keyword">end</span></pre></div>
-<hr><address>Generated on Thu 09-Feb-2012 19:48:51 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+0041 <span class="keyword">for</span> k=1:numel(p.UsingDefaults)
+0042    field = char(p.UsingDefaults(k));
+0043    value = num2str(p.Results.(field));
+0044    <span class="keyword">if</span> isempty(value)   
+0045        value = <span class="string">'[]'</span>;   
+0046    <span class="keyword">end</span>
+0047    fprintf(<span class="string">'   ''%s''    defaults to %s \n'</span>, field, value)
+0048 <span class="keyword">end</span>
+0049 
+0050 <span class="comment">%% Restrain freq to the first steps we want to look at</span>
+0051 freq=freq(:,1:p.Results.L,:);
+0052 
+0053 <span class="comment">%% Now apply any of 'original','area', or 'warea' method (can add new ones!)</span>
+0054 <span class="keyword">switch</span> p.Results.method
+0055     <span class="keyword">case</span> <span class="string">'original'</span>
+0056         scores=reshape(max(freq,[],2),n,ng);
+0057     <span class="keyword">case</span> <span class="string">'area'</span> <span class="comment">% triangles approx. of the area</span>
+0058         scores=reshape((zeros(n,1,ng)+freq(:,1,:))/2+sum((freq(:,2:p.Results.L,:)+freq(:,1:p.Results.L-1,:))/2,2),n,ng);
+0059         scores=1/(p.Results.L-.5)*scores;
+0060 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Tue 24-Jul-2012 18:29:20 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
 </body>
 </html>
