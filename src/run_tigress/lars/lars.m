@@ -60,7 +60,7 @@ t_prev = 0;
 beta_t = zeros(T,p);
 ii = 1;
 tt = t;
-
+gamma=zeros(L,1);
 % LARS loop
 while nVars < L,
     i = i+1;

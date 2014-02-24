@@ -12,10 +12,10 @@
 </head>
 <body>
 <a name="_top"></a>
-<div><a href="../index.html">Home</a> &gt;  <a href="#">run_tigress</a> &gt; stability_selection.m</div>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">run_tigress</a> &gt; stability_selection.m</div>
 
 <!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
-<td align="right"><a href="index.html">Index for ./run_tigress&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+<td align="right"><a href="index.html">Index for run_tigress&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
 
 <h1>stability_selection
 </h1>
@@ -47,7 +47,7 @@
 <h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
 This function calls:
 <ul style="list-style-image:url(../matlabicon.gif)">
-</ul>
+<li><a href="../run_tigress/lars/lars.html" class="code" title="function [beta, A, mu, C, c, gamma] = lars(X, Y, option,L)">lars</a>	Least Angle Regression (LAR) algorithm.</li></ul>
 This function is called by:
 <ul style="list-style-image:url(../matlabicon.gif)">
 <li><a href="tigress.html" class="code" title="function freq=tigress(data,varargin)">tigress</a>	Runs tigress and returns the frequency matrix</li></ul>
@@ -108,11 +108,11 @@ This function is called by:
 0050         <span class="comment">%Store</span>
 0051         freq(:,predictorTF)=freq(:,predictorTF) + abs(sign(path(:,2:L+1)))';
 0052     <span class="keyword">elseif</span> strcmp(method,<span class="string">'lars'</span>)
-0053         path=lars(xs(i1,:), y(i1), <span class="string">'lar'</span>,L);
+0053         path=<a href="../run_tigress/lars/lars.html" class="code" title="function [beta, A, mu, C, c, gamma] = lars(X, Y, option,L)">lars</a>(xs(i1,:), y(i1), <span class="string">'lar'</span>,L);
 0054         <span class="comment">%Store</span>
 0055         freq(:,predictorTF)=freq(:,predictorTF) + abs(sign(path(2:L+1,:)));
 0056         
-0057         path=lars(xs(i2,:), y(i2), <span class="string">'lar'</span>,L);
+0057         path=<a href="../run_tigress/lars/lars.html" class="code" title="function [beta, A, mu, C, c, gamma] = lars(X, Y, option,L)">lars</a>(xs(i2,:), y(i2), <span class="string">'lar'</span>,L);
 0058         <span class="comment">%Store</span>
 0059         freq(:,predictorTF)=freq(:,predictorTF) + abs(sign(path(2:L+1,:)));
 0060     <span class="keyword">end</span>
@@ -123,6 +123,6 @@ This function is called by:
 0065     <span class="keyword">end</span>
 0066     
 0067 <span class="keyword">end</span></pre></div>
-<hr><address>Generated on Tue 24-Jul-2012 18:29:20 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+<hr><address>Generated on Mon 24-Sep-2012 22:50:56 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
 </body>
 </html>

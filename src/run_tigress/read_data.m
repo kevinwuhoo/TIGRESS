@@ -1,11 +1,11 @@
-function data=read_data(networkname)
+function data=read_data(datapath,networkname)
 
 % Transforms data from files into a structure
 % 
-% Syntax: data=read_data(expression_file,tflist_file)
+% Syntax: data=read_data(networkname)
 % 
 % This program assumes that: 
-%  - your data is stored in ../data/<networkname>_Data
+%  - your data is stored in <datapath>/
 %  - all files within this folder begin with <networkname>
 %  - this folder contains at least '<networkname>_expression_data.tsv'
 %  - optionally, it may also contain '<neworkname>_transcription_factors.tsv', 
@@ -22,38 +22,13 @@ function data=read_data(networkname)
 fprintf('Looking for data related to %s ... \n', networkname)
 
 %% Get all files
-datapath=['../data/',networkname,'_Data/'];
-expression_file=[datapath,networkname,'_expression_data.tsv'];
+
+expression_file=[datapath,'/',networkname,'_expression_data.tsv'];
 
 fprintf('Getting expression data ... \n')
-try 
-      A=importdata(expression_file); 
 
-catch err
-      if ~exist(datapath,'dir')
-          currentpath=pwd;
-          [pathstr currentdir]=fileparts(currentpath);
-          if any(strcmp(currentdir,{'data','doc','src'}))
-              msg=sprintf('\n Cannot find directory. Try another network name? ');
-              reply=input(msg,'s');
-              if any(strcmp(reply,{'y',''}))
-                  newname= input('\n Enter new name : ','s');
-              else
-                  throw(err);
-              end
-              expression_file2=['../data/',newname,'_Data/',newname,'_expression_data.tsv'];
-              try 
-                  A=importdata(expression_file2);
-              catch err2
-                  err3=addCause(err2,err);
-                  throw(err3)
-              end
-              datapath=['../data/',newname,'_Data/'];
-              networkname=newname;
-          end
-          
-      end
-end
+A=importdata(expression_file); 
+
 genenames=A.textdata;
 expdata=A.data;
 

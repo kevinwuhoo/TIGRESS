@@ -12,10 +12,10 @@
 </head>
 <body>
 <a name="_top"></a>
-<div><a href="../index.html">Home</a> &gt;  <a href="#">run_tigress</a> &gt; demo_tigress.m</div>
+<div><a href="../index.html">Home</a> &gt;  <a href="index.html">run_tigress</a> &gt; demo_tigress.m</div>
 
 <!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
-<td align="right"><a href="index.html">Index for ./run_tigress&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+<td align="right"><a href="index.html">Index for run_tigress&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
 
 <h1>demo_tigress
 </h1>
@@ -33,7 +33,7 @@
 <h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
 This function calls:
 <ul style="list-style-image:url(../matlabicon.gif)">
-<li><a href="predict_network.html" class="code" title="function edges=predict_network(scores,tf_index,varargin)">predict_network</a>	Create list of predicted edges and optionally print them in a text file</li><li><a href="score_edges.html" class="code" title="function scores = score_edges(freq,varargin)">score_edges</a>	Transforms frequencies into scores</li><li><a href="tigress.html" class="code" title="function freq=tigress(data,varargin)">tigress</a>	Runs tigress and returns the frequency matrix</li></ul>
+<li><a href="../eval_tigress/GRNInferenceEvaluation.html" class="code" title="function [TPR FPR PREC REC L AUROC AUPR P_AUROC P_AUPR] = GRNInferenceEvaluation(gold_positives, prediction_raw, pdf_aupr, pdf_auroc)">GRNInferenceEvaluation</a>	DREAM5-like accuracy evaluation. Returns accuracy statistics given a</li><li><a href="predict_network.html" class="code" title="function edges=predict_network(scores,tf_index,varargin)">predict_network</a>	Create list of predicted edges and optionally print them in a text file</li><li><a href="score_edges.html" class="code" title="function scores = score_edges(freq,varargin)">score_edges</a>	Transforms frequencies into scores</li><li><a href="tigress.html" class="code" title="function freq=tigress(data,varargin)">tigress</a>	Runs tigress and returns the frequency matrix</li></ul>
 This function is called by:
 <ul style="list-style-image:url(../matlabicon.gif)">
 </ul>
@@ -109,7 +109,7 @@ This function is called by:
 0065 fprintf(<span class="string">'********************************************* \n'</span>)
 0066 fprintf(<span class="string">'6. We may now evaluate the predictions \n'</span>)
 0067 fprintf(<span class="string">'********************************************* \n \n'</span>)
-0068 [TPR FPR PREC REC L AUROC AUPR] = GRNInferenceEvaluation(dataTest.gold_edges_num,edges);
+0068 [TPR FPR PREC REC L AUROC AUPR] = <a href="../eval_tigress/GRNInferenceEvaluation.html" class="code" title="function [TPR FPR PREC REC L AUROC AUPR P_AUROC P_AUPR] = GRNInferenceEvaluation(gold_positives, prediction_raw, pdf_aupr, pdf_auroc)">GRNInferenceEvaluation</a>(dataTest.gold_edges_num,edges);
 0069 display(AUPR)
 0070 display(AUROC)
 0071 pause
@@ -118,6 +118,6 @@ This function is called by:
 0074 fprintf(<span class="string">'It will be less fast...\n'</span>)
 0075 
 0076</pre></div>
-<hr><address>Generated on Tue 24-Jul-2012 18:29:20 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
+<hr><address>Generated on Mon 24-Sep-2012 22:50:56 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" title="Matlab Documentation in HTML">m2html</a></strong> &copy; 2005</address>
 </body>
 </html>

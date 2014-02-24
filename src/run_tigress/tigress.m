@@ -7,10 +7,14 @@ function freq=tigress(data,varargin)
 %              'option2',option2_value...)
 %
 % REQUIRED INPUT: 
-% - dataset: a structure containing expdata, tflist and genenames
+% - dataset: a structure containing expdata
 % 
 % OPTIONAL INPUTS:
 % 
+% - dataset can optionally contain the following fields : 'genenames'
+%   (defaults to numbers), the names of the TFs 'tf_list' (defaults to 
+%   genenames) or is set with the help of tf_index, indices to find the TFs 
+%   among the genes'tf_index' (defaults to all genes or is set using tflist) 
 % - R: number of resamplings that should be used to run stability selection 
 %   (default=1000). Note that R can be a vector of increasing values. In
 %   this case, TIGRESS will return frequencies for each of these values.
@@ -39,46 +43,21 @@ function freq=tigress(data,varargin)
 % Anne-Claire Haury, 2011
 
 %% Parse arguments
-p = inputParser;   % Create an instance of the class.
-p.addRequired('data', @isstruct);
-p.addParamValue('L', 5, @isfloat);
-p.addParamValue('R', 1000, @isfloat);
-p.addParamValue('alpha', .2, @(x)x>=0 && x<=1);
-p.addParamValue('verbose',1,@islogical);
-p.addParamValue('LarsAlgo','lars',@(x)any(strcmpi(x,{'spams','glmnet','lars'})));
-p.addParamValue('parallel',0,@islogical);
-p.parse(data,varargin{:})
 
-%% Show which arguments were not specified in the call.
-disp(' ') 
-disp 'List of arguments given default values:' 
-for k=1:numel(p.UsingDefaults)
-   field = char(p.UsingDefaults(k));
-   value = num2str(p.Results.(field));
-   if isempty(value)   
-       value = '[]';   
-   end
-   fprintf('   ''%s''    defaults to %s \n', field, value)
-end
+[expdata genenames tflist tfindices L R alpha verbose LarsAlgo ...
+    parallel] = checkTIGRESSargs(data,varargin,'tigress') ;
 
-%% Extract arguments
-
-R=floor(p.Results.R/2);
-L=p.Results.L;
-alpha=p.Results.alpha;
-verbose=p.Results.verbose;
-LarsAlgo=p.Results.LarsAlgo;
-parallel=p.Results.parallel;
-expdata=data.expdata;
-genenames=data.genenames;
-tflist=data.tflist;
 [nexp ngenes]=size(expdata);
-ntf=length(tflist);
-[bla tfindices] = ismember(tflist,genenames);
+ntf=length(tfindices);
 
 if verbose
     fprintf('Found %d genes, %d experiments, %d transcription factors\n\n',ngenes,nexp,ntf)
+    fprintf('L = %d \n',L)
+    fprintf('alpha = %f \n',alpha)
+    fprintf('R = %d \n',2*R)
+    fprintf('Algorithm : %s \n\n',LarsAlgo)
 end
+
 % Normalize each gene to 0 mean and unit variance 
 expdata =scale_data(expdata);
 
@@ -133,7 +112,7 @@ else
         y = expdata(:,itarget);
 
         % Run stability selection
-        tmp=stability_selection(x,y,ntf,predTF,R,L,alpha,LarsAlgo);
+        tmp=stability_selection(x,y,ntf,find(predTF),R,L,alpha,LarsAlgo);
         for r=1:length(R)
             freq(:,:,itarget,r) = tmp{r}';
         end
