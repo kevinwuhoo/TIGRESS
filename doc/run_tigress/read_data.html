@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of read_data</title>
+  <meta name="keywords" content="read_data">
+  <meta name="description" content="Transforms data from files into a structure">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- menu.html run_tigress -->
+<h1>read_data
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>Transforms data from files into a structure</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function data=read_data(expression_file,tflist_file) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment" style="background-image:url(../brain.png)"><pre class="comment"> Transforms data from files into a structure
+ 
+ Syntax: data=read_data(expression_file,tflist_file)
+ 
+ REQUIRED INPUTS: 
+  - expression_file: a file containing the expression data for all genes. 
+  This input should be of the form 'path/expression_file_name'
+  - tflist_file: a file containing the list of transcription factors. This
+  input should be of the form 'path/expression_file_name'
+
+ See also: <a href="tigress_full.html" class="code" title="function tigress_full(expression_file,tflist_file,varargin)">tigress_full</a>
+
+ Anne-Claire Haury, 2012</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment" style="background-image:url(../brain.png)">
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="tigress_full.html" class="code" title="function tigress_full(expression_file,tflist_file,varargin)">tigress_full</a>	Complete TIGRESS GRN inference method.</li></ul>
+</div>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment" style="background-image:url(../brain.png)"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function data=read_data(expression_file,tflist_file)</a>
+0002 
+0003 <span class="comment">% Transforms data from files into a structure</span>
+0004 <span class="comment">%</span>
+0005 <span class="comment">% Syntax: data=read_data(expression_file,tflist_file)</span>
+0006 <span class="comment">%</span>
+0007 <span class="comment">% REQUIRED INPUTS:</span>
+0008 <span class="comment">%  - expression_file: a file containing the expression data for all genes.</span>
+0009 <span class="comment">%  This input should be of the form 'path/expression_file_name'</span>
+0010 <span class="comment">%  - tflist_file: a file containing the list of transcription factors. This</span>
+0011 <span class="comment">%  input should be of the form 'path/expression_file_name'</span>
+0012 <span class="comment">%</span>
+0013 <span class="comment">% See also: tigress_full</span>
+0014 <span class="comment">%</span>
+0015 <span class="comment">% Anne-Claire Haury, 2012</span>
+0016 
+0017 <span class="comment">%% Import expression data</span>
+0018 A=importdata(expression_file);
+0019 genenames=A.textdata;
+0020 expdata=A.data;
+0021 tflist=importdata(tflist_file);
+0022 
+0023 <span class="comment">%% Set data structure</span>
+0024 data.expdata=expdata;
+0025 data.genenames=genenames;
+0026 data.tflist=tflist;
+0027 data.tf_index=find(ismember(data.tflist,data.genenames));</pre></div>
+<hr><address>Generated on Thu 09-Feb-2012 19:48:51 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of edgelist_2_D5C4_gs</title>
+  <meta name="keywords" content="edgelist_2_D5C4_gs">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2005 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+  <script type="text/javascript">
+    if (top.frames.length == 0) { top.location = "../index.html"; };
+  </script>
+</head>
+<body>
+<a name="_top"></a>
+<!-- menu.html eval_tigress -->
+<h1>edgelist_2_D5C4_gs
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [gold_complete G] = edgelist_2_D5C4_gs(gold_positives) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment" style="background-image:url(../brain.png)"><pre class="comment"> 
+ Stolovitsky et al. (see DREAM5 challenge 4)</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment" style="background-image:url(../brain.png)">
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="edgelist2sparse.html" class="code" title="function A = edgelist2sparse(E)">edgelist2sparse</a>	lone nodes look like this:</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="DREAM5_Challenge4_Evaluation.html" class="code" title="function [TPR FPR PREC REC L AUROC AUPR P_AUROC P_AUPR] = DREAM5_Challenge4_Evaluation(gold_positives, prediction_raw, pdf_aupr, pdf_auroc)">DREAM5_Challenge4_Evaluation</a>	DREAM5 accuracy evaluation. Returns accuracy statistics given a</li></ul>
+</div>
+<!-- crossreference -->
+
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment" style="background-image:url(../brain.png)"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function [gold_complete G] = edgelist_2_D5C4_gs(gold_positives)</a>
+0002 
+0003 <span class="comment">%</span>
+0004 <span class="comment">% Stolovitsky et al. (see DREAM5 challenge 4)</span>
+0005 
+0006 regulators = unique(gold_positives(:,1));
+0007 targets = unique(gold_positives(:,1:2));
+0008 
+0009 <span class="comment">%% lookup matrix for positive edges</span>
+0010 A = <a href="edgelist2sparse.html" class="code" title="function A = edgelist2sparse(E)">edgelist2sparse</a>(gold_positives(:,1:2));
+0011 
+0012 <span class="comment">%% build gold standard matrix for positives (1) AND negatives (-1)</span>
+0013 G = zeros(length(regulators),length(targets));
+0014 <span class="keyword">for</span> k = 1:length(regulators)
+0015     i = regulators(k);
+0016     <span class="keyword">for</span> l = 1:length(targets)
+0017         j = targets(l);
+0018         <span class="keyword">if</span> A(i,j) 
+0019             G(i,j) = 1;        <span class="comment">%% Positive</span>
+0020         <span class="keyword">elseif</span> i~=j            <span class="comment">%% no self edges</span>
+0021             G(i,j) = -1;    <span class="comment">%% Negative</span>
+0022         <span class="keyword">end</span>
+0023     <span class="keyword">end</span>
+0024 <span class="keyword">end</span>
+0025 
+0026 <span class="comment">%% complete gold standard edge list (positives and negatives)</span>
+0027 <span class="comment">%edge_count = sum(sum(G~=0));</span>
+0028 [I J] = find(G&gt;0);    <span class="comment">%% positives</span>
+0029 [K L] = find(G&lt;0);    <span class="comment">%% negatives</span>
+0030 gold_complete = [ I J ones(length(I),1) ; K L zeros(length(K),1) ];</pre></div>
+<hr><address>Generated on Thu 09-Feb-2012 19:48:51 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/" target="_parent">m2html</a></strong> &copy; 2005</address>
+</body>
+</html>
